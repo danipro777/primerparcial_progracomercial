@@ -1,11 +1,11 @@
 {
-  "name": "hospital",
+  "name": "pablovasquez-backend",
   "version": "1.0.0",
   "description": "Backend",
   "main": "app.js",
   "scripts": {
     "start": "nodemon app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "Pablo Vasquez",
   "license": "ISC",
@@ -24,7 +24,9 @@
     "xml": "^1.0.1"
   },
   "devDependencies": {
+    "jest": "^29.7.0",
     "nodemon": "^2.0.14",
-    "sequelize-cli": "^6.3.0"
+    "sequelize-cli": "^6.3.0",
+    "supertest": "^7.0.0"
   }
 }

@@ -5,6 +5,7 @@ const router = Router();
 const empleadosController = require('../controllers/empleadosController');
 const proyectosController = require('../controllers/proyectosController');
 const empleadoproyectoController = require('../controllers/empleadoproyectoController');
+const alertasController = require('../controllers/alertasController');
 
 //RUTAS
 
@@ -25,11 +26,19 @@ module.exports = (app) => {
     router.put('/proyectos/:id', proyectosController.update);
     router.delete('/proyectos/:id', proyectosController.delete);
 
+    // Rutas para empleadoproyecto
     router.get('/empleadoproyecto', empleadoproyectoController.find);
     router.get('/empleadoproyecto/:id', empleadoproyectoController.findById);
     router.post('/empleadoproyecto', empleadoproyectoController.create);
     router.put('/empleadoproyecto/:id', empleadoproyectoController.update);
     router.delete('/empleadoproyecto/:id', empleadoproyectoController.delete);
+
+    // Rutas para alertas
+    router.get('/alertas', alertasController.find);
+    router.get('/alertas/:id', alertasController.findById);
+    router.post('/alertas', alertasController.create);
+    router.put('/alertas/:id', alertasController.update);
+    router.delete('/alertas/:id', alertasController.delete);
 
     app.use('/', router);
 
