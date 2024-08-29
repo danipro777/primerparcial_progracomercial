@@ -20,6 +20,7 @@ module.exports = (app) => {
     router.delete('/empleados/:id', empleadosController.delete);
 
     // Rutas para proyectos
+    router.get('/proyectos/verificar-alertas', proyectosController.checkAndCreateAlerts);
     router.get('/proyectos', proyectosController.find);
     router.get('/proyectos/:id', proyectosController.findById);
     router.post('/proyectos', proyectosController.create);

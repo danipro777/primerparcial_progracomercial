@@ -1,9 +1,41 @@
 'use strict';
 const db = require("../models");
 const Proyectos = db.proyectos;
+const Alertas = db.alertas;
 
 // Métodos CRUD
 module.exports = {
+    async checkAndCreateAlerts(req, res) {
+        try {
+            const proyectos = await Proyectos.findAll();
+            const fechaHoy = new Date();
+            
+            let alertasCreadas = 0;
+    
+            for (let proyecto of proyectos) {
+                const fechaFinal = new Date(proyecto.fechaFin);
+                const diasRestantes = Math.ceil((fechaFinal - fechaHoy) / (1000 * 60 * 60 * 24));
+    
+                // Cambio aquí: Verificar si faltan menos de 7 días
+                if (diasRestantes < 7 && diasRestantes >= 0) {
+                    await Alertas.create({
+                        idProyecto: proyecto.idProyecto,
+                        descripcion: `Faltan menos de 7 días para la fecha final del proyecto "${proyecto.nombreProyecto}".`
+                    });
+                    alertasCreadas++;
+                }
+            }
+    
+            if (alertasCreadas > 0) {
+                return res.status(200).send({ message: `${alertasCreadas} alertas creadas.` });
+            } else {
+                return res.status(200).send({ message: 'No se crearon alertas. Ningún proyecto cumple con la condición de menos de 7 días restantes.' });
+            }
+        } catch (error) {
+            console.error('Error al verificar los proyectos:', error);
+            return res.status(500).send({ message: 'Error al verificar los proyectos.' });
+        }
+    },
 
     find(req, res) {
         return Proyectos.findAll()
